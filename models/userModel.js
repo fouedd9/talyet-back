@@ -18,5 +18,9 @@ async function findById(id) {
   );
   return res.rows[0];
 }
+// pool.query("SELECT NOW()", (err, res) => {
+//   console.log(err, res.rows);
+//   pool.end();
+// });
 
 module.exports = { findByEmail, createUser, findById };
