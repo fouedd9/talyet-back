@@ -12,7 +12,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173", // ton front local
-      "https://tonsite.vercel.app", // ton site déployé sur Vercel
+      "https://talyet-ujne.vercel.app/", // ton site déployé sur Vercel
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
