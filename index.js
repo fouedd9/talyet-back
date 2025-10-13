@@ -10,8 +10,11 @@ app.use(cookieParser());
 app.set("trust proxy", 1); // si t'es derrière un proxy (nginx, etc.)
 app.use(
   cors({
-    // origin: process.env.CLIENT_URL || "http://localhost:3000",
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173", // ton front local
+      "https://tonsite.vercel.app", // ton site déployé sur Vercel
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
