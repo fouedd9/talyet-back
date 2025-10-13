@@ -8,13 +8,20 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.set("trust proxy", 1); // si t'es derrière un proxy (nginx, etc.)
+const allowedOrigins = [
+  "http://localhost:5173", // ton front local
+  "https://talyet-ujne.vercel.app", // ton site Vercel exact
+];
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173", // ton front local
-      "https://talyet-ujne.vercel.app/", // ton site déployé sur Vercel
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );
@@ -29,4 +36,4 @@ app.get("/health", (req, res) => res.json({ ok: true }));
 app.get("/test", (req, res) => res.json({ message: "Test route is working!" }));
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`Server on ${PORT}`));
+app.listen(PORT, () => console.log(`Server running ✅ on ${PORT}`));
