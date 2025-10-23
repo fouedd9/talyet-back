@@ -19,7 +19,8 @@ function cookieOptions() {
 }
 
 async function register(req, res) {
-  const { name, email, password } = req.body;
+  const { name, password } = req.body;
+  const email = req.body.email.toLowerCase();
   try {
     const exists = await userModel.findByEmail(email);
     if (exists) return res.status(400).json({ error: "Email déjà utilisé" });
@@ -40,8 +41,9 @@ async function register(req, res) {
 
 async function login(req, res) {
   const { email, password } = req.body;
+  const emailLower = email.toLowerCase();
   try {
-    const user = await userModel.findByEmail(email);
+    const user = await userModel.findByEmail(emailLower);
     if (!user) return res.status(401).json({ message: "User introuvable" });
 
     const ok = await bcrypt.compare(password, user.password);
@@ -50,7 +52,7 @@ async function login(req, res) {
         .status(401)
         .json({ success: false, message: "mot de passe incorrect" });
 
-    const payload = { id: user.id, name: user.name, email: user.email };
+    const payload = { id: user.id, name: user.name, email: user.emailLower };
     const accessToken = createAccessToken(payload);
     const refreshToken = createRefreshToken({ id: user.id });
 
