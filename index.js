@@ -11,6 +11,7 @@ app.set("trust proxy", 1); // si t'es derrière un proxy (nginx, etc.)
 const allowedOrigins = [
   "http://localhost:5173", // ton front local
   "https://talyet-ujne.vercel.app", // ton site Vercel exact
+  "https://talyet.vercel.app/",
 ];
 app.use(
   cors({
