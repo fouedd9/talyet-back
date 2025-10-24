@@ -20,7 +20,7 @@ function cookieOptions() {
 
 async function register(req, res) {
   const { name, password } = req.body;
-  const email = req.body.email.toLowerCase();
+  const email = req.body.email.toLowerCase().trim();
   try {
     const exists = await userModel.findByEmail(email);
     if (exists) return res.status(400).json({ error: "Email déjà utilisé" });
@@ -41,7 +41,7 @@ async function register(req, res) {
 
 async function login(req, res) {
   const { email, password } = req.body;
-  const emailLower = email.toLowerCase();
+  const emailLower = email.toLowerCase().trim();
   try {
     const user = await userModel.findByEmail(emailLower);
     if (!user) return res.status(401).json({ message: "User introuvable" });
