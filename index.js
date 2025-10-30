@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-
+const { ROUTEX } = require("./routes/index");
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -30,7 +30,11 @@ app.use(
 // routes
 const authRoutes = require("./routes/authRoutes");
 const authMiddleware = require("./middleware/authMiddleware");
+const { getMyprofile } = require("./controllers/profileController");
+
 app.use("/api/auth", authRoutes);
+// app.use("/api/me", getMyprofile);
+app.use(ROUTEX.PROFILE, getMyprofile);
 
 // health
 app.get("/health", (req, res) => res.json({ ok: true }));
