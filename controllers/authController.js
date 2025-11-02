@@ -7,12 +7,12 @@ const {
 const { hashToken } = require("../utils/hash");
 const userModel = require("../models/userModel");
 const refreshModel = require("../models/refreshModel");
-
+const isProd = process.env.NODE_ENV === "production";
 function cookieOptions() {
   return {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    secure: isProd,
+    sameSite: isProd ? "none" : "lax", // Pour autoriser les cookies cross-site
     maxAge: 7 * 24 * 60 * 60 * 1000,
     path: "/",
   };
