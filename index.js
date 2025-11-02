@@ -22,7 +22,7 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );
@@ -30,11 +30,18 @@ app.use(
 // routes
 const authRoutes = require("./routes/authRoutes");
 const authMiddleware = require("./middleware/authMiddleware");
-const { getMyprofile } = require("./controllers/profileController");
+const {
+  getMyprofile,
+  editMyProfile,
+  editMyPhone,
+} = require("./controllers/profileController");
 
 app.use("/api/auth", authRoutes);
 // app.use("/api/me", getMyprofile);
-app.use(ROUTEX.PROFILE, getMyprofile);
+app.get(ROUTEX.PROFILE, authMiddleware, getMyprofile);
+app.put(ROUTEX.PROFILE, authMiddleware, editMyProfile);
+
+app.patch(ROUTEX.PROFILE, authMiddleware, editMyPhone);
 
 // health
 app.get("/health", (req, res) => res.json({ ok: true }));
