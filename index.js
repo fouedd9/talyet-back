@@ -34,6 +34,7 @@ const {
   getMyprofile,
   editMyProfile,
   editMyPhone,
+  editMyBio,
 } = require("./controllers/profileController");
 
 app.use("/api/auth", authRoutes);
@@ -41,7 +42,8 @@ app.use("/api/auth", authRoutes);
 app.get(ROUTEX.PROFILE, authMiddleware, getMyprofile);
 app.put(ROUTEX.PROFILE, authMiddleware, editMyProfile);
 
-app.patch(ROUTEX.PROFILE, authMiddleware, editMyPhone);
+app.patch(ROUTEX.NEW_PHONE, authMiddleware, editMyPhone);
+app.patch(ROUTEX.NEW_BIO, authMiddleware, editMyBio);
 
 // health
 app.get("/health", (req, res) => res.json({ ok: true }));
