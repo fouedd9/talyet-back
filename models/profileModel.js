@@ -55,4 +55,17 @@ const changeMyPhoneNumber = async (userId, newphone) => {
   return result.rows[0];
 };
 
-module.exports = { getMyProfileById, updateMyProfile, changeMyPhoneNumber };
+const changeMyBio = async (userId, newBio) => {
+  const result = await pool.query(`UPDATE users SET bio=$1 WHERE id=$2`, [
+    newBio,
+    userId,
+  ]);
+  return result.rows[0];
+};
+
+module.exports = {
+  getMyProfileById,
+  updateMyProfile,
+  changeMyPhoneNumber,
+  changeMyBio,
+};

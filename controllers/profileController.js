@@ -2,6 +2,7 @@ const {
   getMyProfileById,
   updateMyProfile,
   changeMyPhoneNumber,
+  changeMyBio,
 } = require("../models/profileModel");
 
 async function getMyprofile(req, res) {
@@ -60,8 +61,8 @@ async function editMyProfile(req, res) {
 async function editMyPhone(req, res) {
   const newphone = req.body.phone;
   const userId = req.body.id;
+
   try {
-    console.log(newphone, userId);
     if (!newphone || !userId) {
       return res.status(404).json({ success: false, message: "error 404" });
     }
@@ -75,5 +76,23 @@ async function editMyPhone(req, res) {
     return res.json({ error: "error server" });
   }
 }
+async function editMyBio(req, res) {
+  const newBio = req.body.newBio;
+  const userId = req.body.id;
+  console.log({ newBio, userId });
+  try {
+    if (!newBio || !userId) {
+      return res.status(404).json({ success: false, message: "error 404" });
+    }
+    const result = await changeMyBio(userId, newBio);
+    return res.json({
+      success: true,
+      message: "la bio a etait bien changé !!!",
+      response: result,
+    });
+  } catch (error) {
+    return res.status(500).json({ error: "error server bio" });
+  }
+}
 
-module.exports = { getMyprofile, editMyProfile, editMyPhone };
+module.exports = { getMyprofile, editMyProfile, editMyPhone, editMyBio };
