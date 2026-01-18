@@ -63,9 +63,23 @@ const changeMyBio = async (userId, newBio) => {
   return result.rows[0];
 };
 
+const getAllMyRolesModels = async () => {
+  const result = await pool.query(`SELECT * From roles`);
+  return result.rows;
+};
+const changeUserRole = async (newRole, userId) => {
+  const request = await pool.query(
+    `UPDATE users SET role_id = $1 WHERE id = $2`,
+    [newRole, userId]
+  );
+  const result = await pool.query(`SELECT * From roles`);
+  return result.rows;
+};
+
 module.exports = {
   getMyProfileById,
   updateMyProfile,
   changeMyPhoneNumber,
   changeMyBio,
+  getAllMyRolesModels,
 };
