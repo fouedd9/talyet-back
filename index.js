@@ -35,15 +35,19 @@ const {
   editMyProfile,
   editMyPhone,
   editMyBio,
+  getAllRoles,
+  changeUserRole,
 } = require("./controllers/profileController");
 
 app.use("/api/auth", authRoutes);
 // app.use("/api/me", getMyprofile);
 app.get(ROUTEX.PROFILE, authMiddleware, getMyprofile);
+app.get(ROUTEX.ALL_ROLES, authMiddleware, getAllRoles);
 app.put(ROUTEX.PROFILE, authMiddleware, editMyProfile);
 
 app.patch(ROUTEX.NEW_PHONE, authMiddleware, editMyPhone);
 app.patch(ROUTEX.NEW_BIO, authMiddleware, editMyBio);
+app.patch(ROUTEX.NEW_ROLE, authMiddleware, changeUserRole);
 
 // health
 app.get("/health", (req, res) => res.json({ ok: true }));

@@ -3,6 +3,7 @@ const {
   updateMyProfile,
   changeMyPhoneNumber,
   changeMyBio,
+  getAllMyRolesModels,
 } = require("../models/profileModel");
 
 async function getMyprofile(req, res) {
@@ -95,4 +96,32 @@ async function editMyBio(req, res) {
   }
 }
 
-module.exports = { getMyprofile, editMyProfile, editMyPhone, editMyBio };
+async function getAllRoles(req, res) {
+  try {
+    const result = await getAllMyRolesModels();
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function changeUserRole(req, res) {
+  const newRole = req.body.newRole;
+  const userId = req.body.userId;
+
+  console.log(newRole, userId);
+  try {
+    const request = await res.json({ status: "success", newRole, userId });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+module.exports = {
+  getMyprofile,
+  editMyProfile,
+  editMyPhone,
+  editMyBio,
+  getAllRoles,
+  changeUserRole,
+};
