@@ -4,6 +4,7 @@ const {
   changeMyPhoneNumber,
   changeMyBio,
   getAllMyRolesModels,
+  changeMyRole,
 } = require("../models/profileModel");
 
 async function getMyprofile(req, res) {
@@ -96,22 +97,28 @@ async function editMyBio(req, res) {
   }
 }
 
-async function getAllRoles(req, res) {
-  try {
-    const result = await getAllMyRolesModels();
-
-    return res.status(200).json(result);
-  } catch (error) {
-    console.log(error);
-  }
-}
 async function changeUserRole(req, res) {
   const newRole = req.body.newRole;
   const userId = req.body.userId;
 
   console.log(newRole, userId);
   try {
-    const request = await res.json({ status: "success", newRole, userId });
+    const result = await changeMyRole(newRole, userId);
+    return res.json({
+      success: true,
+      message: "new role is submitted",
+      response: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getAllRoles(req, res) {
+  try {
+    const result = await getAllMyRolesModels();
+
+    return res.status(200).json(result);
   } catch (error) {
     console.log(error);
   }
