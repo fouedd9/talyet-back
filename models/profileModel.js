@@ -67,13 +67,13 @@ const getAllMyRolesModels = async () => {
   const result = await pool.query(`SELECT * From roles`);
   return result.rows;
 };
-const changeUserRole = async (newRole, userId) => {
+const changeMyRole = async (newRole, userId) => {
   const request = await pool.query(
     `UPDATE users SET role_id = $1 WHERE id = $2`,
-    [newRole, userId]
+    [newRole, userId],
   );
   const result = await pool.query(`SELECT * From roles`);
-  return result.rows;
+  return console.log(request.rows);
 };
 
 module.exports = {
@@ -82,4 +82,5 @@ module.exports = {
   changeMyPhoneNumber,
   changeMyBio,
   getAllMyRolesModels,
+  changeMyRole,
 };
